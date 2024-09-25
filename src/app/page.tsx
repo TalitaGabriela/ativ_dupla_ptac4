@@ -1,23 +1,10 @@
-'use client'
-import styles from "./page.module.css"
-import { useState } from "react";
+import Link from 'next/link';
 
 export default function Home() {
-const [user,setUser] = useState(true);
-
-  if (user){
-    return (
-      <div className={styles.page}>
-        <h1>Cliente</h1>
-        <button onClick={()=>setUser(false)}>false</button>
-      </div>
-    );
-  } else{
-    return (
-      <div className={styles.page}>
-        <h1>Administrador</h1>
-        <button onClick={()=>setUser(true)}>true</button>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <h1>Bem-vindo à página inicial</h1>
+      <Link href="/login">Ir para a página de login</Link>
+    </div>
+  );
 }
