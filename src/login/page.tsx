@@ -1,3 +1,4 @@
+"use client"
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
@@ -7,7 +8,7 @@ export default function Login(){
     const [error, setError] = useState('');
     const router = useRouter();
     
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // Simulação de verificação de login
         if (email === 'user@example.com' && senha === 'senha') {
