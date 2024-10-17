@@ -1,8 +1,8 @@
 interface Usuario {
-  id: number;
+  id?: number;
   nome: string;
   email?: string;
-  password: string;
+  senha: string;
   tipo: string;
 }
 
