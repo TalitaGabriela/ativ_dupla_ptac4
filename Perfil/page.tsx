@@ -1,13 +1,13 @@
 "use client";
-import PerfilUsuario from "../interfaces/usuario";
-import Usuario from "../interfaces/usuario";
+// import PerfilUsuario from "../interfaces/usuario";
+import Usuario from "../src/app/interfaces/usuario";
 import { useState, useEffect } from "react";
 
 const PaginaPerfil = () => {
   const [usuario, setUsuario] = useState<Usuario | undefined>();
-  useEffect(() => {
-    setUsuario({ nome: "jose" });
-  }, []);
+//   useEffect(() => {
+//     setUsuario({ nome: "jose" });
+//   }, []);
 
   // {
   //     nome: 'José Lima',
