@@ -44,7 +44,7 @@ export default function Login() {
         }
     }, [router])
     return (
-
+        
         <div style={styles.container}>
             <div style={styles.cadastro}>
                 <h1>Login</h1>

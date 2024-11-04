@@ -21,3 +21,8 @@ body {
     text-wrap: balance;
   }
 } */
+
+body {
+  margin: 0;
+  padding: 0;
+}

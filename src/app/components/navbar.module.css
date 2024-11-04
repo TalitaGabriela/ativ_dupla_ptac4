@@ -4,6 +4,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* margin: 0;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;  */
 }
 
 .logoContainer{
@@ -18,6 +24,7 @@
 
 .link{
     color: white;
+    padding: 10px;
     text-decoration: none;
     transition: color 0.3s;
 }
