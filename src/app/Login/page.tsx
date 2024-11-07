@@ -1,80 +1,90 @@
 "use client"
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import Usuario from "../interfaces/usuario";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Usuario from "../interfaces/usuario";
+import { ApiURL } from "../config";
+import { stringify } from "querystring";
+import { setCookie } from "nookies";
+import { parseCookies } from 'nookies';
+import Navbar from "../components/Navbar";
 
 export default function Login() {
-    const [email, setEmail] = useState<string>()
-    const [senha, setSenha] = useState<string>()
-    const [error, setError] = useState<string>()
-    const [usuarios, setUsuarios] = useState<Usuario[]>([
-        {
-            id: 1,
-            nome: "João Pedro",
-            email: "joao.canezin22@gmail.com",
-            senha: "senha",
-            tipo: "adm"
-        },
-
-        {
-            id: 1,
-            nome: "Brenda Só Fé",
-            email: "brendaDoGrau@gmail.com",
-            senha: "eunãoseioquecolocar123",
-            tipo: "adm"
-        }
-    ])
+    const [email, setEmail] = useState('')
+    const [senha, setSenha] = useState('')
+    const [error, setError] = useState('')
     const router = useRouter();
-    const onSubmit = (e: React.FocusEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        const usuario = usuarios.find((user) => user.email == email && user.senha == senha
-        )
-        if (usuario) {
-            localStorage.setItem('usuario', JSON.stringify(usuario))
-            router.push('/home')
-        } else {
-            setError('Email ou senha inválido')
+
+    interface ResponseSignin {
+        erro: boolean,
+        mensagem: string,
+        token?: string
+    }
+
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+        try {
+            const response = await fetch(`${ApiURL}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'aplication/json'
+                },
+                body: JSON.stringify({ email, senha })
+            })
+            if (response) {
+                const data: ResponseSignin = await response.json()
+                const { erro, mensagem, token = '' } = data
+                console.log(data)
+                if (erro) {
+                    setError(mensagem)
+                } else {
+                    setCookie(undefined, 'restaurant-token', token, {
+                        maxAge: 60 * 60 * 1 // 1 hora
+                    })
+                }
+            } else {
+
+            }
+        } catch (error) {
+            console.error("Erro de requisição", error)
         }
     }
-    useEffect(() => {
-        const usuarioLogado = localStorage.getItem('usuario');
-        if (usuarioLogado) {
-            router.push('/home')
-        }
-    }, [router])
+
+
     return (
-        
-        <div style={styles.container}>
-            <div style={styles.cadastro}>
-                <h1>Login</h1>
-                <form onSubmit={onSubmit} style={styles.form}>
-                    <div>
-                        <label htmlFor="email">Email:</label>
-                        <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            style={styles.input}
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="senha">Senha:</label>
-                        <input
-                            type="password"
-                            id="senha"
-                            value={senha}
-                            onChange={(e) => setSenha(e.target.value)}
-                            style={styles.input}
-                        />
-                    </div>
-                    <button type="submit" style={styles.button}>Cadastrar</button>
-                </form>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                <a href="/Cadastro">Cadastra-se</a>
+        <div>
+            <Navbar />
+            <div style={styles.container}>
+                <div style={styles.cadastro}>
+                    <h1>Login</h1>
+                    <form onSubmit={handleSubmit} style={styles.form}>
+                        <div>
+                            <label htmlFor="email">Email:</label>
+                            <input
+                                type="email"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                style={styles.input}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="senha">Senha:</label>
+                            <input
+                                type="password"
+                                id="senha"
+                                value={senha}
+                                onChange={(e) => setSenha(e.target.value)}
+                                style={styles.input}
+                            />
+                        </div>
+                        <button type="submit" style={styles.button}>Cadastrar</button>
+                    </form>
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                    <a href="/Cadastro">Cadastra-se</a>
+                </div >
             </div >
-        </div >
+        </div>
 
     );
 }

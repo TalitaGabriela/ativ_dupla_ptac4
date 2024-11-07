@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./navbar.module.css";
+import styles from "../styles/navbar.module.css";
 
 export default function Navbar() {
   return (
@@ -11,6 +11,7 @@ export default function Navbar() {
 
       <div className={styles.navLink}>
         <Link href="/Reservas" className={styles.link}>Reservas</Link>
+        <Link href="/" className={styles.link}>Home</Link>
         <Link href="/Login" className={styles.link}>Login</Link>
         <Link href="/Cadastro" className={styles.link}>Cadastrar</Link>
       </div>

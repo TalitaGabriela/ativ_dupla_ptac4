@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Usuario from '../interfaces/usuario';
+import Navbar from '../components/Navbar';
 
 export default function Cadastro() {
   const [nome, setNome] = useState('')
@@ -49,50 +50,53 @@ export default function Cadastro() {
   };
 
   return (
+    <div>
+      <Navbar />
 
-    <div style={styles.container}>
-      <div style={styles.cadastro}>
-        <h1>Cadastro</h1>
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <div>
-            <label htmlFor="nome">Nome:</label>
-            <input
-              type="nome"
-              id="nome"
-              value={usuario.nome}
-              onChange={(e) => alterarNome(e.target.value)}
-              required
-              style={styles.input}
-            />
-          </div>
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              value={usuario.email}
-              onChange={(e) => alterarEmail(e.target.value)}
-              required
-              style={styles.input}
-            />
-          </div>
-          <div>
-            <label htmlFor="senha">Senha:</label>
-            <input
-              type="password"
-              id="senha"
-              value={usuario.senha}
-              onChange={(e) => alterarSenha(e.target.value)}
-              required
+      <div style={styles.container}>
+        <div style={styles.cadastro}>
+          <h1>Cadastro</h1>
+          <form onSubmit={handleSubmit} style={styles.form}>
+            <div>
+              <label htmlFor="nome">Nome:</label>
+              <input
+                type="nome"
+                id="nome"
+                value={usuario.nome}
+                onChange={(e) => alterarNome(e.target.value)}
+                required
+                style={styles.input}
+              />
+            </div>
+            <div>
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                value={usuario.email}
+                onChange={(e) => alterarEmail(e.target.value)}
+                required
+                style={styles.input}
+              />
+            </div>
+            <div>
+              <label htmlFor="senha">Senha:</label>
+              <input
+                type="password"
+                id="senha"
+                value={usuario.senha}
+                onChange={(e) => alterarSenha(e.target.value)}
+                required
 
-              style={styles.input}
-            />
-          </div>
-          <button type="submit" style={styles.button}>Cadastrar</button>
-        </form>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+                style={styles.input}
+              />
+            </div>
+            <button type="submit" style={styles.button}>Cadastrar</button>
+          </form>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+        </div >
       </div >
-    </div >
+    </div>
 
   );
 }
