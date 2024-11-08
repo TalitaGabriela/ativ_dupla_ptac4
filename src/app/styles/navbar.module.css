@@ -1,15 +1,9 @@
 .navbar{
-    background-color: #1f2937;
-    padding: 1rem;
+    background-color: #ed6623a5;
+    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* margin: 0;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;  */
 }
 
 .logoContainer{
@@ -23,12 +17,29 @@
 }
 
 .link{
-    color: white;
-    padding: 10px;
+    color: #ffffff;
+    padding: 35px;
     text-decoration: none;
+    font-weight: bold;
+    font-size: 25px;
     transition: color 0.3s;
 }
 
 .link:hover{
-    color: #d1d5db;
+    color: #e0804c;
+}
+
+.linkEntrar{
+    background-color: #ed2323;
+    border-radius: 6px;
+    color: #ffffff;
+    padding: 15px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+.linkEntrar:hover{
+    color: #2f2a2a;
 }

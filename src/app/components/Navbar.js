@@ -4,17 +4,27 @@ import styles from "../styles/navbar.module.css";
 
 export default function Navbar() {
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.logoContainer}>
-        <Image src="/images/logo.jpg" width={40} height={40} alt="Logo"/>
-      </div>
+    <div>
+      <nav className={styles.navbar}>
+        <div className={styles.logoContainer}>
+          <Image src="/images/logo.png" width={80} height={80} alt="Logo" />
+        </div>
 
-      <div className={styles.navLink}>
-        <Link href="/Reservas" className={styles.link}>Reservas</Link>
-        <Link href="/" className={styles.link}>Home</Link>
-        <Link href="/Login" className={styles.link}>Login</Link>
-        <Link href="/Cadastro" className={styles.link}>Cadastrar</Link>
-      </div>
-    </nav>
+        <div className={styles.navLink}>
+          <Link href="/" className={styles.link}>
+            Home
+          </Link>
+          <Link href="/Reservas" className={styles.link}>
+            Reservas
+          </Link>
+          <Link href="/Cadastro" className={styles.link}>
+            Cadastrar
+          </Link>
+          <Link href="/Login" className={styles.linkEntrar}>
+            Entrar
+          </Link>
+        </div>
+      </nav>
+    </div>
   );
 }
