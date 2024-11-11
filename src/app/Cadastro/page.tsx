@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Usuario from '../interfaces/usuario';
 import Navbar from '../components/Navbar';
+import styles from "../styles/autenticacao.module.css"
 
 export default function Cadastro() {
   const [nome, setNome] = useState('')
@@ -50,96 +51,60 @@ export default function Cadastro() {
   };
 
   return (
-    <div>
+    <div className={styles.body}>
       <Navbar />
 
-      <div style={styles.container}>
-        <div style={styles.cadastro}>
-          <h1>Cadastro</h1>
-          <form onSubmit={handleSubmit} style={styles.form}>
-            <div>
-              <label htmlFor="nome">Nome:</label>
-              <input
-                type="nome"
-                id="nome"
-                value={usuario.nome}
-                onChange={(e) => alterarNome(e.target.value)}
-                required
-                style={styles.input}
-              />
-            </div>
-            <div>
-              <label htmlFor="email">Email:</label>
-              <input
-                type="email"
-                id="email"
-                value={usuario.email}
-                onChange={(e) => alterarEmail(e.target.value)}
-                required
-                style={styles.input}
-              />
-            </div>
-            <div>
-              <label htmlFor="senha">Senha:</label>
-              <input
-                type="password"
-                id="senha"
-                value={usuario.senha}
-                onChange={(e) => alterarSenha(e.target.value)}
-                required
+      <div className={styles.container}>
+        <div className={styles.card}>
+          <div className={styles.containerCadasLog}>
+            <h1>Cadastro</h1>
+            <form onSubmit={handleSubmit} className={styles.form}>
+              <div>
+                <label htmlFor="nome" className={styles.EmailSenha}>Nome:</label>
+                <input
+                  type="nome"
+                  id="nome"
+                  value={usuario.nome}
+                  onChange={(e) => alterarNome(e.target.value)}
+                  required
+                  className={styles.input}
+                />
+              </div>
+              <div>
+                <label htmlFor="email" className={styles.EmailSenha}>Email:</label>
+                <input
+                  type="email"
+                  id="email"
+                  value={usuario.email}
+                  onChange={(e) => alterarEmail(e.target.value)}
+                  required
+                  className={styles.input}
+                />
+              </div>
+              <div>
+                <label htmlFor="senha" className={styles.EmailSenha}>Senha:</label>
+                <input
+                  type="password"
+                  id="senha"
+                  value={usuario.senha}
+                  onChange={(e) => alterarSenha(e.target.value)}
+                  required
 
-                style={styles.input}
-              />
+                  className={styles.input}
+                />
+              </div>
+              <button type="submit" className={styles.button}>Cadastrar</button>
+            </form>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            <div className={styles.possuiConta}>
+              <p>Já possui uma conta?</p>
+              <a href="/Login" className={styles.rotaCadastro}>Acessar conta</a>
             </div>
-            <button type="submit" style={styles.button}>Cadastrar</button>
-          </form>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-        </div >
+          </div >
+        </div>
       </div >
+
     </div>
 
   );
-}
-
-const styles = {
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  cadastro: {
-    backgroundColor: '#fff',
-    padding: '40px',
-    borderRadius: '8px',
-    width: '100%',
-    maxWidth: '400px',
-    textAling: 'center',
-  },
-
-  form: {
-    display: 'flex',
-    flexDirection: 'column' as 'column',
-    gap: '20px'
-  },
-
-  input: {
-    width: '100%',
-    padding: '10px',
-    borderRadius: '4px',
-    border: '1px solid #ccc',
-
-
-  },
-
-  button: {
-    display: 'flex',
-    justifyContent: 'center',
-    padding: '10px',
-    backgroundColor: '#0070f3',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  }
 }

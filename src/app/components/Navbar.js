@@ -7,7 +7,7 @@ export default function Navbar() {
     <div>
       <nav className={styles.navbar}>
         <div className={styles.logoContainer}>
-          <Image src="/images/logo.png" width={80} height={80} alt="Logo" />
+          <Image src="/images/logo.png" width={100} height={90} alt="Logo" />
         </div>
 
         <div className={styles.navLink}>

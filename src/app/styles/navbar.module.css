@@ -1,45 +1,45 @@
-.navbar{
-    background-color: #ed6623a5;
-    padding: 10px;
+.navbar {
+  background-color: #ed6623;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+/* .navLinks{
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 40px;
+} */
+
+.link {
+  color: #ffffff;
+  padding: 60px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 34px;
+  transition: color 0.3s;
 }
 
-.logoContainer{
-    display: flex;
-    align-items: center;
+.link:hover {
+  text-decoration: underline;
 }
 
-.navLinks{
-    display: flex;
-    gap: 1.5rem;
+.linkEntrar {
+  background-color: #ed2323;
+  border-radius: 6px;
+  color: #ffffff;
+  padding: 15px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 34px;
+  transition: 0.3s ease;
 }
 
-.link{
-    color: #ffffff;
-    padding: 35px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 25px;
-    transition: color 0.3s;
-}
-
-.link:hover{
-    color: #e0804c;
-}
-
-.linkEntrar{
-    background-color: #ed2323;
-    border-radius: 6px;
-    color: #ffffff;
-    padding: 15px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 20px;
-    transition: color 0.3s;
-}
-
-.linkEntrar:hover{
-    color: #2f2a2a;
+.linkEntrar:hover {
+  background-color: #dc1d1d;
 }

@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import styles from "../styles/login.module.css"
+import styles from "../styles/autenticacao.module.css"
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Usuario from "../interfaces/usuario";
@@ -57,11 +57,11 @@ export default function Login() {
             <Navbar />
             <div className={styles.container}>
                 <div className={styles.card}>
-                    <div className={styles.login}>
+                    <div className={styles.containerCadasLog}>
                         <h1>Login</h1>
                         <form onSubmit={handleSubmit} className={styles.form}>
                             <div>
-                                <label htmlFor="email">Email:</label>
+                                <label htmlFor="email" className={styles.EmailSenha}>Email:</label>
                                 <input
                                     type="email"
                                     id="email"
@@ -71,7 +71,7 @@ export default function Login() {
                                 />
                             </div>
                             <div>
-                                <label htmlFor="senha">Senha:</label>
+                                <label htmlFor="senha" className={styles.EmailSenha}>Senha:</label>
                                 <input
                                     type="password"
                                     id="senha"
