@@ -10,17 +10,24 @@ import { setCookie } from "nookies";
 import { parseCookies } from 'nookies';
 import Navbar from "../components/Navbar";
 
+interface ResponseSignin {
+    erro: boolean,
+    mensagem: string,
+    token?: string
+}
+
 export default function Login() {
     const [email, setEmail] = useState('')
-    const [senha, setSenha] = useState('')
+    const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const router = useRouter();
 
-    interface ResponseSignin {
-        erro: boolean,
-        mensagem: string,
-        token?: string
-    }
+    useEffect(() => {
+        const { 'restaurant-token': token } = parseCookies()
+        if (token) {
+            router.push('/')
+        }
+    }, [])
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -30,7 +37,7 @@ export default function Login() {
                 headers: {
                     'Content-Type': 'aplication/json'
                 },
-                body: JSON.stringify({ email, senha })
+                body: JSON.stringify({ email, password })
             })
             if (response) {
                 const data: ResponseSignin = await response.json()
@@ -42,13 +49,16 @@ export default function Login() {
                     setCookie(undefined, 'restaurant-token', token, {
                         maxAge: 60 * 60 * 1 // 1 hora
                     })
+                    router.push('/')
                 }
             } else {
-
+                setError("Resposta não encontrada")
             }
         } catch (error) {
             console.error("Erro de requisição", error)
         }
+        console.log("Email:", email);
+        console.log("Senha:", password)
     }
 
 
@@ -71,12 +81,12 @@ export default function Login() {
                                 />
                             </div>
                             <div>
-                                <label htmlFor="senha" className={styles.EmailSenha}>Senha:</label>
+                                <label htmlFor="password" className={styles.EmailSenha}>Senha:</label>
                                 <input
                                     type="password"
-                                    id="senha"
-                                    value={senha}
-                                    onChange={(e) => setSenha(e.target.value)}
+                                    id="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     className={styles.input}
                                 />
                             </div>

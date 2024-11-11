@@ -8,9 +8,9 @@ import styles from "../styles/autenticacao.module.css"
 export default function Cadastro() {
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [usuario, setUsuario] = useState<Usuario>({ nome: '', email: '', senha: '', tipo: "cliente" })
+  const [usuario, setUsuario] = useState<Usuario>({ nome: '', email: '', password: '', tipo: "cliente" })
   const router = useRouter();
 
   const alterarNome = (novoNome: string) => {
@@ -35,7 +35,7 @@ export default function Cadastro() {
     setUsuario(
       (usuarioAnterior) => ({
         ...usuarioAnterior,
-        senha: novoSenha
+        password: novoSenha
       })
     )
   }
@@ -43,7 +43,7 @@ export default function Cadastro() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Simulação de verificação de login
-    if (nome === 'Joao Pedro' && email === 'joao.canezin22@gmail.com' && senha === 'senha') {
+    if (nome === 'Joao Pedro' && email === 'joao.canezin22@gmail.com' && password === 'password') {
       router.push('/');
     } else {
       setError('Credenciais inválidas. Tente novamente.');
@@ -82,11 +82,11 @@ export default function Cadastro() {
                 />
               </div>
               <div>
-                <label htmlFor="senha" className={styles.EmailSenha}>Senha:</label>
+                <label htmlFor="password" className={styles.EmailSenha}>Senha:</label>
                 <input
                   type="password"
-                  id="senha"
-                  value={usuario.senha}
+                  id="password"
+                  value={usuario.password}
                   onChange={(e) => alterarSenha(e.target.value)}
                   required
 
