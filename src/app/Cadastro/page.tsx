@@ -1,17 +1,54 @@
 "use client"
 import { useState } from 'react';
+import { ApiURL } from '../config';
 import { useRouter } from 'next/navigation';
 import Usuario from '../interfaces/usuario';
 import Navbar from '../components/Navbar';
 import styles from "../styles/autenticacao.module.css"
+import { setCookie } from 'nookies';
+
+interface ResponseSignin {
+  erro: boolean,
+  mensagem: string,
+  token?: string
+}
 
 export default function Cadastro() {
-  const [nome, setNome] = useState('')
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [usuario, setUsuario] = useState<Usuario>({ nome: '', email: '', password: '', tipo: "cliente" })
   const router = useRouter();
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`${ApiURL}/auth/cadastro`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(usuario)
+
+      })
+      if (response) {
+        const data: ResponseSignin = await response.json()
+        const { erro, mensagem, token = '' } = data
+        console.log(data)
+        if (erro) {
+          setError(mensagem)
+        } else {
+          setCookie(undefined, 'restaurant-token', token, {
+            maxAge: 60 * 60 * 1 // 1 hora
+          })
+          router.push('/')
+        }
+      } else {
+        setError("Resposta não encontrada")
+      }
+    } catch (error) {
+      console.error("Erro de requisição", error)
+    }
+  }
 
   const alterarNome = (novoNome: string) => {
     setUsuario(
@@ -40,15 +77,7 @@ export default function Cadastro() {
     )
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Simulação de verificação de login
-    if (nome === 'Joao Pedro' && email === 'joao.canezin22@gmail.com' && password === 'password') {
-      router.push('/');
-    } else {
-      setError('Credenciais inválidas. Tente novamente.');
-    }
-  };
+
 
   return (
     <div className={styles.body}>
