@@ -35,9 +35,10 @@ export default function Login() {
             const response = await fetch(`${ApiURL}/auth/login`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'aplication/json'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ email, password })
+
             })
             if (response) {
                 const data: ResponseSignin = await response.json()
