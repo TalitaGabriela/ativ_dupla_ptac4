@@ -57,9 +57,7 @@ export default function Login() {
             }
         } catch (error) {
             console.error("Erro de requisição", error)
-        }
-        console.log("Email:", email);
-        console.log("Senha:", password)
+        }   
     }
 
 
