@@ -1,5 +1,4 @@
 "use client"
-import Link from "next/link";
 import styles from "../styles/autenticacao.module.css"
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -64,10 +63,12 @@ export default function Login() {
     return (
         <div className={styles.body}>
             <Navbar />
+
             <div className={styles.container}>
                 <div className={styles.card}>
                     <div className={styles.containerCadasLog}>
                         <h1>Login</h1>
+
                         <form onSubmit={handleSubmit} className={styles.form}>
                             <div>
                                 <label htmlFor="email" className={styles.EmailSenha}>Email:</label>
@@ -79,6 +80,7 @@ export default function Login() {
                                     className={styles.input}
                                 />
                             </div>
+
                             <div>
                                 <label htmlFor="password" className={styles.EmailSenha}>Senha:</label>
                                 <input
@@ -91,6 +93,7 @@ export default function Login() {
                             </div>
                             <button type="submit" className={styles.button}>Entrar</button>
                         </form>
+                        
                         {error && <p style={{ color: 'red' }}>{error}</p>}
                         <a href="/Cadastro" className={styles.rotaCadastro}>Cadastra-se</a>
                     </div >

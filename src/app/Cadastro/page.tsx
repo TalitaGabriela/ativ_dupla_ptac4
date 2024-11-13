@@ -77,8 +77,6 @@ export default function Cadastro() {
     )
   }
 
-
-
   return (
     <div className={styles.body}>
       <Navbar />
@@ -87,6 +85,7 @@ export default function Cadastro() {
         <div className={styles.card}>
           <div className={styles.containerCadasLog}>
             <h1>Cadastro</h1>
+
             <form onSubmit={handleSubmit} className={styles.form}>
               <div>
                 <label htmlFor="nome" className={styles.EmailSenha}>Nome:</label>
@@ -99,6 +98,7 @@ export default function Cadastro() {
                   className={styles.input}
                 />
               </div>
+
               <div>
                 <label htmlFor="email" className={styles.EmailSenha}>Email:</label>
                 <input
@@ -110,6 +110,7 @@ export default function Cadastro() {
                   className={styles.input}
                 />
               </div>
+
               <div>
                 <label htmlFor="password" className={styles.EmailSenha}>Senha:</label>
                 <input
@@ -124,6 +125,7 @@ export default function Cadastro() {
               </div>
               <button type="submit" className={styles.button}>Cadastrar</button>
             </form>
+
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <div className={styles.possuiConta}>
               <p>Já possui uma conta?</p>

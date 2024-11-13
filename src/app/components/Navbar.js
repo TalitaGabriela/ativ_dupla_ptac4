@@ -1,8 +1,14 @@
 import Image from "next/image";
+import { useState } from "react";
 import Link from "next/link";
 import styles from "../styles/navbar.module.css";
 
 export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <div>
       <nav className={styles.navbar}>
@@ -10,7 +16,11 @@ export default function Navbar() {
           <Image src="/images/logo.png" width={100} height={90} alt="Logo" />
         </div>
 
-        <div className={styles.navLink}>
+        <button className={styles.hamburger} onClick={toggleMenu}>
+          ☰
+        </button>
+
+        <div className={`${styles.navLink} ${menuOpen ? styles.showMenu : ""}`}>
           <Link href="/" className={styles.link}>
             Home
           </Link>
@@ -24,6 +34,7 @@ export default function Navbar() {
             Entrar
           </Link>
         </div>
+        
       </nav>
     </div>
   );

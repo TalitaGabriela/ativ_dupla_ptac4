@@ -84,3 +84,22 @@
 .possuiConta p {
   font-size: 20px;
 }
+
+@media (max-widht: 600px) {
+  .container {
+    padding: 10px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .containerCadasLog h1 {
+    font-size: 20px;
+  }
+
+  .input,
+  .button {
+    font-size: 20px;
+  }
+}
