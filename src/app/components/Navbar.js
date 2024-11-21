@@ -24,7 +24,7 @@ export default function Navbar() {
           <Link href="/" className={styles.link}>
             Home
           </Link>
-          <Link href="/Reservas" className={styles.link}>
+          <Link href="/Reserva" className={styles.link}>
             Reservas
           </Link>
           <Link href="/Cadastro" className={styles.link}>

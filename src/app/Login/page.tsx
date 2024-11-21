@@ -56,7 +56,7 @@ export default function Login() {
             }
         } catch (error) {
             console.error("Erro de requisição", error)
-        }   
+        }
     }
 
 
@@ -69,6 +69,7 @@ export default function Login() {
                     <div className={styles.containerCadasLog}>
                         <h1>Login</h1>
 
+                        {/* Email */}
                         <form onSubmit={handleSubmit} className={styles.form}>
                             <div>
                                 <label htmlFor="email" className={styles.EmailSenha}>Email:</label>
@@ -93,7 +94,7 @@ export default function Login() {
                             </div>
                             <button type="submit" className={styles.button}>Entrar</button>
                         </form>
-                        
+
                         {error && <p style={{ color: 'red' }}>{error}</p>}
                         <a href="/Cadastro" className={styles.rotaCadastro}>Cadastra-se</a>
                     </div >
