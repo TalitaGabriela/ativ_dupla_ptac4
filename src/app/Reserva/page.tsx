@@ -22,8 +22,27 @@ export default function Reserva() {
                     {/* Mesa */}
                     <form className={style.form}>
                         <div>
-                            <label>Mesa</label>
-                            <input className={style.input} />
+                            <label>Mesas disponíveis:</label>
+                            <br/>
+                            <button id="mesa1" className={style.button}>Mesa 1</button>
+                            <br/>
+                            <button id="mesa2" className={style.button}>Mesa 2</button>
+                            <br/>
+                            <button id="mesa3" className={style.button}>Mesa 3</button>
+                            <br/>
+                            <button id="mesa4" className={style.button}>Mesa 4</button>
+                            <br/>
+                            <button id="mesa5" className={style.button}>Mesa 5</button>
+                            <br/>
+                            <button id="mesa6" className={style.button}>Mesa 6</button>
+                            <br/>
+                            <button id="mesa7" className={style.button}>Mesa 7</button>
+                            <br/>
+                            <button id="mesa8" className={style.button}>Mesa 8</button>
+                            <br/>
+                            <button id="mesa9" className={style.button}>Mesa 9</button>
+                            <br/>
+                            <button id="mesa10" className={style.button}>Mesa 10</button>
                         </div>
                     </form>
 
