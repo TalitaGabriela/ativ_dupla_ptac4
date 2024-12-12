@@ -1,8 +1,30 @@
 "use client"
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import style from "../styles/reserva.module.css"
 
-export default function Reserva() {
+type MesasType ={
+    id: number,
+    codigo: string,
+    n_lugares: number,
+}
+
+type Reservas = {
+    
+    status: boolean,
+}
+
+export default function Reservas() {
+    const [mesas, setMesas] = useState<MesasType[]>([])
+        useEffect(() => {
+            async function fetchData(){
+                const response = await fetch('http:localhost:3333/reservas')
+                const data = await response.json()
+                setMesas(data.mesas)
+            }
+            fetchData()
+        }, [])
+    
     return (
         <div className={style.body}>
             <Navbar />
