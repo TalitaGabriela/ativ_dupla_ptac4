@@ -14,6 +14,7 @@ export default function Navbar() {
       <nav className={styles.navbar}>
         <div className={styles.logoContainer}>
           <Image src="/images/logo.png" width={100} height={90} alt="Logo" />
+          <h1>T&J Lanches</h1>
         </div>
 
         <button className={styles.hamburger} onClick={toggleMenu}>
@@ -25,7 +26,7 @@ export default function Navbar() {
             Home
           </Link>
           <Link href="/Reserva" className={styles.link}>
-            Reservas
+            Reservar
           </Link>
           <Link href="/Cadastro" className={styles.link}>
             Cadastrar

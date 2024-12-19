@@ -1,100 +1,157 @@
 "use client"
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import style from "../styles/reserva.module.css"
+import style from "../styles/reserva.module.css"; // Importando o módulo CSS
 
-type MesasType ={
-    id: number,
-    codigo: string,
-    n_lugares: number,
-}
-
-type Reservas = {
-    
-    status: boolean,
+type MesasType = {
+  id: number,
+  codigo: string,
+  n_lugares: number
 }
 
 export default function Reservas() {
-    const [mesas, setMesas] = useState<MesasType[]>([])
-        useEffect(() => {
-            async function fetchData(){
-                const response = await fetch('http:localhost:3333/reservas')
-                const data = await response.json()
-                setMesas(data.mesas)
-            }
-            fetchData()
-        }, [])
-    
-    return (
-        <div className={style.body}>
-            <Navbar />
+  const [mesas, setMesas] = useState<MesasType[]>([]);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch('http://localhost:3000/Reserva');
+      const data = await response.json();
+      setMesas(data.mesas);
+    }
+    fetchData();
+  }, []);
 
-            <div className={style.container}>
-                <h1>Faça sua Reserva</h1>
-                <div className={style.reserva}>
+  function getDateNow() {
+    const today = new Date();
+    return today.toISOString().split("T")[0];
+  }
 
-                    {/* Cliente */}
-                    <form className={style.form}>
-                        <div>
-                            <label>Cliente</label>
-                            <input className={style.input} />
-                        </div>
-                    </form>
+  const [selectedTable, setSelectedTable] = useState('');
+  const [dateTables, setDateTables] = useState(getDateNow);
+  const reservas = [{
+    id: 1,
+    mesa: 1,
+    data: '2024-11-29'
+  },
+  {
+    id: 1,
+    mesa: 2,
+    data: '2024-11-29'
+  },
+  {
+    id: 1,
+    mesa: 2,
+    data: '2024-11-28'
+  }];
 
-                    {/* Mesa */}
-                    <form className={style.form}>
-                        <div>
-                            <label>Mesas disponíveis:</label>
-                            <br/>
-                            <button id="mesa1" className={style.button}>Mesa 1</button>
-                            <br/>
-                            <button id="mesa2" className={style.button}>Mesa 2</button>
-                            <br/>
-                            <button id="mesa3" className={style.button}>Mesa 3</button>
-                            <br/>
-                            <button id="mesa4" className={style.button}>Mesa 4</button>
-                            <br/>
-                            <button id="mesa5" className={style.button}>Mesa 5</button>
-                            <br/>
-                            <button id="mesa6" className={style.button}>Mesa 6</button>
-                            <br/>
-                            <button id="mesa7" className={style.button}>Mesa 7</button>
-                            <br/>
-                            <button id="mesa8" className={style.button}>Mesa 8</button>
-                            <br/>
-                            <button id="mesa9" className={style.button}>Mesa 9</button>
-                            <br/>
-                            <button id="mesa10" className={style.button}>Mesa 10</button>
-                        </div>
-                    </form>
+  function handleChangeDate(e: ChangeEvent<HTMLInputElement>) {
+    setDateTables(e.target.value);
+  }
 
-                    {/* Data */}
-                    <form className={style.form}>
-                        <div>
-                            <label>Data</label>
-                            <input className={style.input} type="date" />
-                        </div>
-                    </form>
-
-                    {/* Numero de pessoas */}
-                    <form className={style.form}>
-                        <div>
-                            <label>Numero de Pessoas</label>
-                            <input className={style.input} type="number" />
-                        </div>
-                    </form>
-
-                    {/* Status */}
-                    <form className={style.form}>
-                        <div>
-                            <label>Status</label>
-                            <input className={style.input} />
-                        </div>
-                    </form>
-
-                </div>
-                <button type="submit" className={style.button}>Reservar</button>
-            </div>
+  return (
+    <div className={style.body}>
+    <Navbar/>
+      <div className={style.container}>
+        
+        {/* Lado esquerdo - Informações do cliente */}
+        <div className={style.cliente}>
+          <div className={style.box}>
+            {/*<img
+              src="https://github.com/MrMinerin.png"
+              alt="Usuário"
+              className={style.img}
+            />*/}
+            <h2 className={style.nome}>Jéferson Carlos de Souza</h2>
+            <p className={style.cargo}>Cliente</p>
+          </div>
         </div>
-    )
+
+        {/* Lado central - Mesas disponíveis e seleção */}
+        <div className={style.reserva}>
+          <h2 className={style.titulo}>Mesas Disponíveis</h2>
+          
+          {/* Seleção de data */}
+          <label className={style.form}>
+            <input
+              type="date"
+              value={dateTables}
+              min={getDateNow()}
+              className={style.input}
+              onChange={handleChangeDate}
+            />
+          </label>
+
+          {/* Botões de mesas disponíveis */}
+          <div className={style.grid}>
+            {mesas.map((table) => {
+              if (reservas.find(reserva => dateTables === reserva.data && reserva.mesa === table.id)) {
+                return (
+                  <button
+                    key={table.id}
+                    className={style.buttonUnavailable}
+                    onClick={() => setSelectedTable(table.codigo)}
+                  >
+                    {table.codigo}
+                  </button>
+                );
+              } else {
+                return (
+                  <button
+                    key={table.id}
+                    className={style.buttonAvailable}
+                    onClick={() => setSelectedTable(table.codigo)}
+                  >
+                    {table.codigo}
+                  </button>
+                );
+              }
+            })}
+          </div>
+        </div>
+
+        {/* Lado direito - Formulário de reserva */}
+        <div className={style.formulario}>
+          {selectedTable ? (
+            <div>
+              <h2 className={style.tituloReserva}>Reservar {selectedTable}</h2>
+              <form className={style.form}>
+                <label className={style.label}>
+                  Nome:
+                  <input
+                    type="text"
+                    className={style.input}
+                    placeholder="Seu nome"
+                  />
+                </label>
+                <label className={style.label}>
+                  Data:
+                  <input
+                    type="date"
+                    className={style.input}
+                  />
+                </label>
+                <label className={style.label}>
+                  Pessoas:
+                  <input
+                    type="number"
+                    max={4}
+                    min={1}
+                    className={style.input}
+                  />
+                </label>
+                <button
+                  type="submit"
+                  className={style.buttonConfirmar}
+                >
+                  Confirmar Reserva
+                </button>
+              </form>
+            </div>
+          ) : (
+            <p className={style.texto}>Selecione uma mesa para reservar</p>
+          )}
+        </div>
+
+      </div>
+    </div>
+  );
 }
