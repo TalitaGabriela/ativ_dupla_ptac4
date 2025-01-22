@@ -1,173 +1,158 @@
 "use client"
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { Mesas } from "../interfaces/mesas"
+import { FormEvent, useEffect, useState } from "react";
+import { Mesa } from "../interfaces/mesa"
 import type { Reservas } from "../interfaces/reservas";
+import { parseCookies } from "nookies";
 
 
 export default function Reservas() {
-  const [mesas, setMesas] = useState<Mesas[]>([]);
+  const [mesas, setMesas] = useState<Mesa[]>([]);
   const [reservas, setReservas] = useState<Reservas[]>([]);
+  const [dateTables, setDateTables] = useState(new Date().toISOString().split("T")[0]);
+  const [adm, setAdm] = useState(false);
+  const [carregar, setCarregar] = useState(true)
   const [formReserva, setFormReserva] = useState({
-    id: 0,
-    usuario_id: 0,
     mesa_id: 0,
-    data: getDateNow(),
-    n_pessoas: 0,
-    status: true
+    n_pessoas: 1,
+    data: "",
   })
 
-  // console.log(formReserva["data"])
-  // key , value
+  // 
+  async function fetchData() {
+    const cookies = parseCookies();
+    const token = cookies["restaurant-token"];
 
-  function alterFormReserva<K extends keyof Reservas>(key: K, value: Reservas[K]) {
-    console.log(key, value)
-    setFormReserva((prevForm) => ({
-      ...prevForm,
-      [key]: value
-    }))
+    try {
+      setCarregar(true)
+      const resMesa = await fetch(`http://localhost:8000/mesa/disponivel?data=${dateTables}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (resMesa) {
+        const mesaDate = await resMesa.json()
+        setMesas(mesaDate.mesas || []);
+      }
+
+      const resReservas = await fetch(`http://localhost:8000/reservas`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (resReservas) {
+        const reservaDate = await resReservas.json();
+        setReservas(reservaDate.reservas || []);
+        setAdm(reservaDate.adm || false);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar:", error);
+    } finally {
+      setCarregar(false)
+    }
   }
 
-  async function fetchData() {
-    const responseReservas = await fetch('http://localhost:3333/reservas');
-    const responseMesas = await fetch('http://localhost:3333/mesas');
-    const dataReservas = await responseReservas.json();
-    const dataMesas = await responseMesas.json();
+  // Busca de Reservas
+  async function buscaReserva() {
+    const cookies = parseCookies();
+    const token = cookies["restaurant-token"];
 
-    setMesas(dataMesas);
-    setReservas(dataReservas)
+    try {
+      const response = await fetch(`http://localhost:8000/reservas/list?data=${dateTables}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (response) {
+        const data = await response.json()
+        setReservas(data.reservas || [])
+      } else {
+        console.error("Erro ao buscar reservas")
+      }
+    } catch (error) {
+      console.error("Erro ao buscar reservas:", error)
+    }
+  }
+
+  async function novaReserva(e: FormEvent) {
+    e.preventDefault();
+    const cookies = parseCookies();
+    const token = cookies["restaurant-token"];
+
+    try {
+      const response = await fetch(`http://localhost:8000/reservas/reservaNova`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer $token`,
+        },
+        body: JSON.stringify(formReserva),
+      });
+
+      if (response) {
+        fetchData();
+      } else {
+        console.error("Erro ao criar reserva")
+      }
+    } catch (error) {
+      console.error("Erro ao criar reserva:", error)
+    }
+  }
+
+  function handleChangeDate(e: React.ChangeEvent<HTMLInputElement>) {
+    setDateTables(e.target.value);
   }
 
   useEffect(() => {
-
     fetchData();
-  }, []);
+  }, [dateTables]);
 
-  function getDateNow() {
-    const today = new Date();
-    return today.toISOString().split("T")[0];
-  }
-
-  const [selectedTable, setSelectedTable] = useState('');
-  const [dateTables, setDateTables] = useState(getDateNow);
-  const SimulaReservas = [{
-    id: 1,
-    mesa: 1,
-    data: '2024-11-29'
-  },
-  {
-    id: 1,
-    mesa: 2,
-    data: '2024-11-29'
-  },
-  {
-    id: 1,
-    mesa: 2,
-    data: '2024-11-28'
-  }];
-
-  function handleChangeDate(e: ChangeEvent<HTMLInputElement>) {
-    setDateTables(e.target.value);
-    alterFormReserva("data", e.target.value)
-  }
-
-  async function handleSubmitForm(e: FormEvent) {
-    e.preventDefault()
-    console.log(formReserva)
-    await fetch('http://localhost:3333/reservas', {
-      method: 'POST',
-      body: JSON.stringify(formReserva)
-    })
-    fetchData()
+  if (carregar) {
+    return <p>Carregando</p>
   }
 
   return (
     <div>
 
       <div>
+        <h1>Reservas</h1>
 
-        <div>
-
-          <img src="https://github.com/MrMinerin.png"
-            alt="Usuário" />
-          <h2>Jeferson</h2>
-          <p>Cliente</p>
-        </div>
-      </div>
-
-
-      <div>
-        <div>
-          <h2>Mesas Disponíveis</h2>
-          <label>
-            <input type="date"
-              value={dateTables}
-              min={getDateNow()}
-              onChange={handleChangeDate} />
-          </label>
-        </div>
-
-        <div>
-          {mesas.map((table) => {
-            const isReserved = SimulaReservas.some(
-              (reserva) => reserva.data === dateTables && reserva.mesa === table.id
-            );
-
-            if (isReserved) {
-              return (
-                <button
-                  key={table.id} disabled>
-                  {table.codigo} (Reservada)
-                </button>
-
-              );
-            } else {
-              return (
-                <button
-                  key={table.id}
-
-                  onClick={() => {
-                    alterFormReserva("mesa_id", table.id)
-                    setSelectedTable(table.codigo)
-                  }}
-                >
-                  {table.codigo}
-                </button>
-              );
-            }
-          })}
-        </div>
-      </div>
-
-      <div>
-        {selectedTable ? (
-          <div>
-            <h2>Reservar {selectedTable}</h2>
-            <form onSubmit={handleSubmitForm}>
-              <label>
-                nome:
-                <input type="text"
-                  placeholder="Seu nome"
-                  onChange={(e) => alterFormReserva("usuario_id", parseInt(e.target.value))} />
-              </label>
-              <label>
-                pessoas:
-                <input type="number"
-                  max={4}
-                  min={1}
-                  onChange={(e) => alterFormReserva("n_pessoas", parseInt(e.target.value))} />
-
-              </label>
-              <button type="submit">
-                Confirmar Reserva
-              </button>
-            </form>
-          </div>
-        ) : (
-          <p>Selecione uma mesa para reservar</p>
-
+        {/* Botão para ADMs */}
+        {adm && (
+          <>
+            <h2>Buscar Reservas</h2>
+            <input type="date" value={dateTables} onChange={handleChangeDate} />
+            <button onClick={buscaReserva}>Buscar Reservas</button>
+          </>
         )}
+
+        {/* Reservas */}
+        <h1>{adm ? "Reservas" : "Reservas feitas"}</h1>
+        <ul>
+          {reservas.map((reserva) => (
+            <li key={reserva.id}>
+              <p>Mesa {reserva.mesa.codigo || reserva.mesa_id}</p>
+              <p>Data: {new Date(reserva.data).toLocaleDateString()}</p>
+              <p>Pessoas: {reserva.n_pessoas}</p>
+              {adm && <p>Cliente: {reserva.usuario?.nome || "Não encontrado"}</p>}
+            </li>
+          ))}
+        </ul>
+
+        {/* Mesas não Reservadas */}
+        <h1>Mesas não Reservadas</h1>
+        <div>
+          {mesas.map((mesa) => (
+            <button key={mesa.id} onClick={() => setFormReserva({ ...formReserva, mesa_id: mesa.id, data: dateTables })}>
+              Mesa {mesa.codigo} - {mesa.n_lugares} lugares
+            </button>
+          ))}
+        </div>
+
+        {/* Fazer uma Reserva */}
+        <form onSubmit={novaReserva}>
+          <label>Número de pessoas:</label>
+          <input type="number"
+            min={1}
+            max={mesas.find((mesaN) => mesaN.id === formReserva.mesa_id)?.n_lugares || 1} value={formReserva.n_pessoas} onChange={(e) => setFormReserva({ ...formReserva, n_pessoas: Number(e.target.value) })} />
+          <button type="submit">Reservar</button>
+        </form>
+
       </div>
     </div>
-
   )
 }

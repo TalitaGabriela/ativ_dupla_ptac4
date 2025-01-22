@@ -1,6 +1,6 @@
 "use client";
 // import PerfilUsuario from "../interfaces/usuario";
-import Usuario from "../src/app/interfaces/usuario";
+import Usuario from "../interfaces/usuario";
 import { useState, useEffect } from "react";
 
 const PaginaPerfil = () => {

@@ -2,9 +2,7 @@
 import styles from "../styles/autenticacao.module.css"
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Usuario from "../interfaces/usuario";
 import { ApiURL } from "../config";
-import { stringify } from "querystring";
 import { setCookie } from "nookies";
 import { parseCookies } from 'nookies';
 import Navbar from "../components/Navbar";
