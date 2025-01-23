@@ -7,7 +7,7 @@ export type MesasType = {
   export async function ListMesas (){
       
   
-      const response = await fetch('http://localhost:3000/Reserva')
+      const response = await fetch('http://localhost:3000/reservas')
       const data = await response.json()
       const dataMesas : MesasType[] = data.mesas
     

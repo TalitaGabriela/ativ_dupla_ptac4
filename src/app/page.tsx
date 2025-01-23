@@ -14,7 +14,7 @@ export default function Home() {
     if (!token) {
       router.push('/Login')
     }
-  }, [])
+  }, [router])
   return (
     <div className={styles.body}>
       <Navbar />
