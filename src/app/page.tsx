@@ -2,6 +2,7 @@
 import styles from "./styles/home.module.css"
 import { useRouter } from 'next/navigation';
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import { parseCookies } from 'nookies';
 import { useEffect } from 'react';
 
@@ -57,15 +58,8 @@ export default function Home() {
         </div>
       </div>
 
-      <div className={styles.propagandaContainer}>
-        <div className={styles.text}>
-          <h1>Venha pra nossa Lanchonete!</h1>
-        </div>
-        <div className={styles.imagemPropaganda}>
-          <img src="/images/propaganda_lanche.png" alt="" />
-        </div>
-      </div>
 
+      < Footer />
     </div>
   )
 }

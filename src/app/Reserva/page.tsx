@@ -1,157 +1,191 @@
 "use client"
-import { FormEvent, useEffect, useState } from "react";
-import { Mesa } from "../interfaces/mesa"
-import type { Reservas } from "../interfaces/reservas";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import Mesa from "../interfaces/mesa"
+import PerfilReservas from "../interfaces/reservas";
 import { parseCookies } from "nookies";
+import { ApiURL } from "../config";
+import ResponseSignin from "../interfaces/response";
+import styles from "../styles/reserva.module.css"
 
 
 export default function Reservas() {
   const [mesas, setMesas] = useState<Mesa[]>([]);
-  const [reservas, setReservas] = useState<Reservas[]>([]);
-  const [dateTables, setDateTables] = useState(new Date().toISOString().split("T")[0]);
-  const [adm, setAdm] = useState(false);
-  const [carregar, setCarregar] = useState(true)
-  const [formReserva, setFormReserva] = useState({
+  const [mesaClient, setMesaClient] = useState<number | null>(null);
+  const [reservas, setReservas] = useState<PerfilReservas[]>([]);
+  const [dateTables, setDateTables] = useState(getDateNow());
+  const [error, setError] = useState('');
+  const [formReserva, setFormReserva] = useState<PerfilReservas>({
+    id: 0,
+    usuario_id: 0,
     mesa_id: 0,
-    n_pessoas: 1,
-    data: "",
+    data: new Date,
+    n_pessoas: 0,
+    status: false
   })
 
-  // 
-  async function fetchData() {
-    const cookies = parseCookies();
-    const token = cookies["restaurant-token"];
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(`${ApiURL}/mesa`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        });
+        if (!response.ok) {
+          throw new Error('Erro ao buscar mesa')
+        }
 
-    try {
-      setCarregar(true)
-      const resMesa = await fetch(`http://localhost:8000/mesa/disponivel?data=${dateTables}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (resMesa) {
-        const mesaDate = await resMesa.json()
-        setMesas(mesaDate.mesas || []);
-      }
-
-      const resReservas = await fetch(`http://localhost:8000/reservas`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      if (resReservas) {
-        const reservaDate = await resReservas.json();
-        setReservas(reservaDate.reservas || []);
-        setAdm(reservaDate.adm || false);
-      }
-    } catch (error) {
-      console.error("Erro ao buscar:", error);
-    } finally {
-      setCarregar(false)
-    }
-  }
-
-  // Busca de Reservas
-  async function buscaReserva() {
-    const cookies = parseCookies();
-    const token = cookies["restaurant-token"];
-
-    try {
-      const response = await fetch(`http://localhost:8000/reservas/list?data=${dateTables}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (response) {
         const data = await response.json()
-        setReservas(data.reservas || [])
-      } else {
-        console.error("Erro ao buscar reservas")
+        if (Array.isArray(data.mesas)) {
+          setMesas(data.mesas);
+        } else {
+          console.error('Formato inválido: ', data)
+        }
+
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error("Erro ao buscar reservas:", error)
     }
+    fetchData()
+  }, []);
+
+  function getDateNow() {
+    const today = new Date();
+    return today.toISOString().split("T")[0];
   }
-
-  async function novaReserva(e: FormEvent) {
-    e.preventDefault();
-    const cookies = parseCookies();
-    const token = cookies["restaurant-token"];
-
-    try {
-      const response = await fetch(`http://localhost:8000/reservas/reservaNova`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer $token`,
-        },
-        body: JSON.stringify(formReserva),
-      });
-
-      if (response) {
-        fetchData();
-      } else {
-        console.error("Erro ao criar reserva")
-      }
-    } catch (error) {
-      console.error("Erro ao criar reserva:", error)
-    }
-  }
-
-  function handleChangeDate(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChangeDate(e: ChangeEvent<HTMLInputElement>) {
     setDateTables(e.target.value);
   }
 
-  useEffect(() => {
-    fetchData();
-  }, [dateTables]);
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault()
+    console.log(formReserva)
+  }
 
-  if (carregar) {
-    return <p>Carregando</p>
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    const { 'restaurant-token': token } = parseCookies()
+
+    try {
+      const response = await fetch(`${ApiURL}/reservas/novo`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ ...reservas, mesa_id: mesaClient })
+      })
+
+      if (!response.ok) {
+        throw new Error('Erro para cadastrar.');
+      }
+
+      const data: ResponseSignin = await response.json();
+      if (data.error) {
+        setError(data.msg)
+      } else {
+        console.log('Reserva Cadastrada: ', reservas);
+      }
+
+    } catch (error) {
+      console.error(error);
+      setError('Erro para cadastrar')
+    }
+  };
+
+  const alterarData = (novaData: string) => {
+
+    setReservas((reservaAnterior) => ({
+      ...reservaAnterior,
+      data: new Date(novaData)
+    }));
+  }
+
+  const alterarN_Pessoas = (numPessoas: string) => {
+    setReservas((reservaAnterior) => ({
+      ...reservaAnterior,
+      n_pessoas: Number(numPessoas)
+    }));
   }
 
   return (
     <div>
 
       <div>
-        <h1>Reservas</h1>
+        <h1>Reserva de Mesa</h1>
+        <div className={styles.row}>
+          <div className={styles.col}>
+            <input
+              type="date"
+              value={dateTables}
+              min={getDateNow()}
+              onChange={handleChangeDate}
+            />
 
-        {/* Botão para ADMs */}
-        {adm && (
-          <>
-            <h2>Buscar Reservas</h2>
-            <input type="date" value={dateTables} onChange={handleChangeDate} />
-            <button onClick={buscaReserva}>Buscar Reservas</button>
-          </>
-        )}
+            <div>
+              {mesaClient !== null && (
+                <div>
+                  <h2>Reservar Mesa{mesaClient}</h2>
+                  <p>Código:</p>
+                  <form onSubmit={handleSubmit}>
 
-        {/* Reservas */}
-        <h1>{adm ? "Reservas" : "Reservas feitas"}</h1>
-        <ul>
-          {reservas.map((reserva) => (
-            <li key={reserva.id}>
-              <p>Mesa {reserva.mesa.codigo || reserva.mesa_id}</p>
-              <p>Data: {new Date(reserva.data).toLocaleDateString()}</p>
-              <p>Pessoas: {reserva.n_pessoas}</p>
-              {adm && <p>Cliente: {reserva.usuario?.nome || "Não encontrado"}</p>}
-            </li>
-          ))}
-        </ul>
+                    <div>
+                      <label htmlFor="dateInput">Data da Reserva</label>
+                      <input type="date"
+                        id="dateInput"
+                        value={formReserva.data.toISOString().split("T")[0]}
+                        onChange={(e) => setFormReserva({ ...formReserva, data: new Date(e.target.value) })}
+                      />
+                      <div>Coloque a data que irá reservar a mesa</div>
+                    </div>
 
-        {/* Mesas não Reservadas */}
-        <h1>Mesas não Reservadas</h1>
-        <div>
-          {mesas.map((mesa) => (
-            <button key={mesa.id} onClick={() => setFormReserva({ ...formReserva, mesa_id: mesa.id, data: dateTables })}>
-              Mesa {mesa.codigo} - {mesa.n_lugares} lugares
-            </button>
-          ))}
+                    <div>
+                      <label htmlFor="n_Pessoa">Número de pessao na Mesa</label>
+                      <input type="number"
+                        id="n_Pessoa"
+                        value={formReserva.n_pessoas}
+                        onChange={(e) => setFormReserva({ ...formReserva, n_pessoas: Number(e.target.value) })
+                        } min={1} />
+                      <div>Coloque o número de pessoas</div>
+                    </div>
+
+                    {error &&
+                      <div>
+                        <p>{error}</p>
+                      </div>
+                    }
+
+                    <button type="submit">Reservar Mesa</button>
+                  </form>
+                </div>
+              )}
+              {mesaClient === null && <p>Selecione Mesa para Reservar</p>}
+            </div>
+          </div>
+
+          <div>
+            <div>
+              {mesas && mesas.length > 0 ? (
+                mesas.map(table => (
+                  <div onClick={() => setMesaClient(Number(table.id))}
+                    key={table.id}
+                  >
+                    <img src="#"
+                      alt={`Mesa ${table.id}`} />
+                    <h4>Mesa 0{table.id} - {table.n_lugares} cadeiras</h4>
+                    <p><span>group</span>Reservado</p>
+                  </div>
+                ))
+
+              ) : (
+                <p>Nenhuma mesa</p>
+              )}
+            </div>
+          </div>
+
         </div>
-
-        {/* Fazer uma Reserva */}
-        <form onSubmit={novaReserva}>
-          <label>Número de pessoas:</label>
-          <input type="number"
-            min={1}
-            max={mesas.find((mesaN) => mesaN.id === formReserva.mesa_id)?.n_lugares || 1} value={formReserva.n_pessoas} onChange={(e) => setFormReserva({ ...formReserva, n_pessoas: Number(e.target.value) })} />
-          <button type="submit">Reservar</button>
-        </form>
-
       </div>
     </div>
   )

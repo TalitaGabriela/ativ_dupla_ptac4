@@ -1,7 +1,7 @@
 .navbar {
   color: #ffffff;
   background-color: #ed6623;
-  padding: 20px;
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,14 +10,19 @@
 .logoContainer {
   display: flex;
   align-items: center;
+  gap: 10px;
+}
+
+.logoContainer h1 {
+  font-size: 20px;
 }
 
 .link {
   color: #ffffff;
-  padding: 60px;
+  padding: 10px 15px;
   text-decoration: none;
   font-weight: bold;
-  font-size: 25px;
+  font-size: 18px;
   transition: color 0.3s;
 }
 
@@ -29,10 +34,10 @@
   background-color: #ed2323;
   border-radius: 6px;
   color: #ffffff;
-  padding: 15px;
+  padding: 8px 15px;
   text-decoration: none;
   font-weight: bold;
-  font-size: 25px;
+  font-size: 18px;
   transition: 0.3s ease;
 }
 
@@ -42,11 +47,22 @@
 
 .hamburger {
   display: none;
-  font-size: 30px;
+  font-size: 25px;
   color: #ffffff;
   background: none;
   border: none;
   cursor: pointer;
+  transition: transform 0.3s ease;
+
+}
+
+.hamburger.active {
+  transform: rotate(90deg);
+}
+
+.navLink {
+  display: flex;
+  gap: 15px;
 }
 
 @media (max-width: 768px) {
@@ -54,12 +70,14 @@
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 60px;
+    top: 95px;
     right: 0;
     background-color: #ed6623;
-    width: 100%;
+    width: 35%;
     padding: 20px;
     gap: 10px;
+    border-radius: 15px;
+    
   }
 
   .showMenu {
@@ -71,10 +89,12 @@
   }
 
   .link {
-    font-size: 20px;
+    font-size: 16px;
+    padding: 35px;
   }
 
   .linkEntrar {
-    font-size: 20px;
+    font-size: 16px;
+    padding: 10px;
   }
 }

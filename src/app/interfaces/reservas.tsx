@@ -1,8 +1,8 @@
-export interface Reservas {
-  id: number;
+export default interface PerfilReservas {
+  id?: number;
   usuario_id: number;
   mesa_id: number;
-  data: string;
+  data: Date;
   n_pessoas: number;
   status: boolean;
 }

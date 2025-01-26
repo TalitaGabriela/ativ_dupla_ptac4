@@ -3,8 +3,7 @@ import styles from "../styles/autenticacao.module.css"
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ApiURL } from "../config";
-import { setCookie } from "nookies";
-import { parseCookies } from 'nookies';
+import { setCookie,  parseCookies } from "nookies";
 import Navbar from "../components/Navbar";
 
 interface ResponseSignin {
@@ -24,7 +23,7 @@ export default function Login() {
         if (token) {
             router.push('/')
         }
-    }, [])
+    }, [router])
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
