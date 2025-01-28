@@ -1,10 +1,13 @@
 "use client"
 import styles from "../styles/autenticacao.module.css"
 import { FormEvent, useActionState, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { ApiURL } from "../config";
 import { setCookie, parseCookies } from "nookies";
 import Navbar from "../components/Navbar";
+
+import Usuario from "../interfaces/usuario";
+
 interface ResponseSignin {
     erro: boolean,
     mensagem: string,
@@ -53,7 +56,9 @@ export default function Login() {
         } catch (error) {
             console.error("Erro de requisição", error)
         }
+        redirect(`/`)
     }
+
 
 
     return (
@@ -100,3 +105,4 @@ export default function Login() {
 
     );
 }
+

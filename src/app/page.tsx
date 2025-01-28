@@ -13,7 +13,7 @@ export default function Home() {
   useEffect(() => {
     const { 'restaurant-token': token } = parseCookies()
     if (!token) {
-      router.push('/Login',)
+      router.push('/Login')
     }
   }, [router])
   return (
