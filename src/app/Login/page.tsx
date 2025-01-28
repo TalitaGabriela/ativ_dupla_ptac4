@@ -1,11 +1,10 @@
 "use client"
 import styles from "../styles/autenticacao.module.css"
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ApiURL } from "../config";
-import { setCookie,  parseCookies } from "nookies";
+import { setCookie, parseCookies } from "nookies";
 import Navbar from "../components/Navbar";
-
 interface ResponseSignin {
     erro: boolean,
     mensagem: string,

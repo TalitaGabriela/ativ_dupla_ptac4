@@ -13,7 +13,7 @@ export default function Home() {
   useEffect(() => {
     const { 'restaurant-token': token } = parseCookies()
     if (!token) {
-      router.push('/Login')
+      router.push('/Login',)
     }
   }, [router])
   return (
@@ -21,7 +21,7 @@ export default function Home() {
       <Navbar />
       <div className={styles.cardContainer}>
         <div className={styles.card}>
-          <img src="/images/Cardápio.png" alt="" className={styles.cardimg} />
+          <img src="/images/Cardápio.png" alt="cardapio" className={styles.cardimg} />
           <div className={styles.conteudo}>
             <h2>Cardápio Especial</h2>
             <p>Explore nossos pratos deliciosos e escolha sua próxima refeição!</p>
@@ -30,7 +30,7 @@ export default function Home() {
         </div>
 
         <div className={styles.card}>
-          <img src="/images/reservaMesa.jpg" alt="" className={styles.cardimg} />
+          <img src="/images/reservaMesa.jpg" alt="reserva" className={styles.cardimg} />
           <div className={styles.conteudo}>
             <h2>Reserve sua Mesa</h2>
             <p>Garanta seu lugar e aproveite uma experiência incrível!</p>
@@ -39,7 +39,7 @@ export default function Home() {
         </div>
 
         <div className={styles.card}>
-          <img src="/images/t&j_fachada.png" alt="" className={styles.cardimg} />
+          <img src="/images/t&j_fachada.png" alt="logo" className={styles.cardimg} />
           <div className={styles.conteudo}>
             <h2>Venha até ao nosso Estabelicimento!</h2>
             <p>Garanta seu lugar e a experiência de comer lanches incríveis!</p>
@@ -51,10 +51,10 @@ export default function Home() {
 
       <div className={styles.propagandaContainer}>
         <div className={styles.imagemPropaganda}>
-          <img src="/images/marketing.jpg" alt="" />
+          <img src="/images/marketing.jpg" alt="a" />
         </div>
         <div className={styles.imagemPropaganda}>
-          <img src="/images/marketing.2jpg.jpg" alt="" />
+          <img src="/images/marketing.2jpg.jpg" alt="aa" />
         </div>
       </div>
 

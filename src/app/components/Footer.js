@@ -23,13 +23,16 @@ export default function Footer() {
           <h4>Siga nas Redes Sociais</h4>
           <div className={styles.socialIcons}>
             <Link href="#" className={styles.link}>
-              <Image src="/images/insta.png" width={15} height={15} /> Instagram
+              <Image src="/images/insta.png" width={15} height={15} alt="a" />{" "}
+              Instagram
             </Link>
             <Link href="#" className={styles.link}>
-              <Image src="/images/face.png" width={15} height={15} /> Facebook
+              <Image src="/images/face.png" width={15} height={15} alt="a" />{" "}
+              Facebook
             </Link>
             <Link href="#" className={styles.link}>
-              <Image src="/images/whats.png" width={15} height={15} /> WhatsApp
+              <Image src="/images/whats.png" width={15} height={15} alt="a" />{" "}
+              WhatsApp
             </Link>
           </div>
         </div>
