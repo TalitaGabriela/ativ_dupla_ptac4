@@ -1,7 +1,8 @@
 
-import { Menu } from "../components/Menu"
 import { redirect } from "next/navigation"
-import { fecthUser } from "../functions/fetchUser"
+import { Menu } from "../components/Menu"
+
+import { fecthUser } from "../functions/usuarios"
 
 export default async function Reservas() {
 

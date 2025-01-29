@@ -1,17 +1,19 @@
-import { fecthUser } from "../../functions/fetchUser"
+import { fecthUser } from "../../functions/usuarios"
 import { Menu } from "../../components/Menu"
 import { redirect } from "next/navigation"
-import { fecthMesa } from "../../functions/mesas"
+
 import { ListMesasReserva } from "./ListMesasReserva"
+import { FetchMesas } from "../../functions/mesas"
+
 
 export default async function NovaReserva() {
     const user = await fecthUser()
-    const mesas = await fecthMesa()
-    if (!user || !mesas) redirect('/Login')
+    const mesa = await FetchMesas()
+    if (!user || !mesa) redirect('/Login')
     return (
         <div>
             <Menu usuario={user} />
-            <ListMesasReserva mesas={mesas} />
+            <ListMesasReserva mesas={mesa} />
         </div>
     )
 }

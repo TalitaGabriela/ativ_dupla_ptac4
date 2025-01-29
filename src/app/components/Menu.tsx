@@ -37,7 +37,7 @@ export function Menu({ usuario }: MenuProps) {
                                 <ClipboardList /> Novas Reservas
                             </Link>
 
-                            <Link href={'/Reserva/nova'}>
+                            <Link href={'/Reserva'}>
                                 <ClipboardList />Minha Reservas
                             </Link>
 

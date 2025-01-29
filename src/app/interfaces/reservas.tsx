@@ -1,8 +1,9 @@
-export default interface PerfilReservas {
+export default interface Reserva {
+  find(arg0: (reserva: any) => boolean): unknown;
   id?: number;
   usuario_id: number;
   mesa_id: number;
-  data: Date;
+  data: string;
   n_pessoas: number;
   status: boolean;
 }

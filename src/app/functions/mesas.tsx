@@ -5,7 +5,7 @@ import Mesa from "../interfaces/mesa"
 import { ApiURL } from "../config"
 
 
-export async function fecthMesa(): Promise<Mesa[] | null> {
+export async function FetchMesas(): Promise<Mesa[] | null> {
     try {
         const cookiesStored = await cookies()
         const token = cookiesStored.get('restaurant-token')
