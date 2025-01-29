@@ -1,5 +1,4 @@
 'use client'
-import Usuario from "../interfaces/usuario";
 import PerfilMesa from "../interfaces/mesa"
 import ResponseSignin from "../interfaces/response";
 import { useState } from "react"

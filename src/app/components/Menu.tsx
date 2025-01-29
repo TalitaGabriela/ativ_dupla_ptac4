@@ -18,11 +18,11 @@ export function Menu({ usuario }: MenuProps) {
                 usuario.tipo === 'adm' ?
                     (
                         <div>
-                            <Link href={'/Reservas'}>
+                            <Link href={'/Reserva'}>
                                 <ClipboardList /> Todas Reservas
                             </Link>
 
-                            <Link href={'/Mesas'}>
+                            <Link href={'/Mesa'}>
                                 <ChefHat /> Mesas
                             </Link>
 
@@ -33,15 +33,15 @@ export function Menu({ usuario }: MenuProps) {
                     ) :
                     (
                         <div>
-                            <Link href={'/Reservas/novo'}>
+                            <Link href={'/Reserva/novo'}>
                                 <ClipboardList /> Novas Reservas
                             </Link>
 
-                            <Link href={'/Reservas/nova'}>
+                            <Link href={'/Reserva/nova'}>
                                 <ClipboardList />Minha Reservas
                             </Link>
 
-                            <Link href={'/Mesas'}>
+                            <Link href={'/Mesa'}>
                                 <ClipboardList /> Reservas
                             </Link>
 
