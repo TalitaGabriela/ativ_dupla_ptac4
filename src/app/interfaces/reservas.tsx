@@ -1,3 +1,5 @@
+import Mesa from "./mesa";
+
 export default interface Reserva {
   find(arg0: (reserva: any) => boolean): unknown;
   id?: number;
@@ -6,5 +8,7 @@ export default interface Reserva {
   data: string;
   n_pessoas: number;
   status: boolean;
+  mesa?: Mesa
+
 }
 

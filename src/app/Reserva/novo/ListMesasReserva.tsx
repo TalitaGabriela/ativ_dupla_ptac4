@@ -26,7 +26,6 @@ export function ListMesasReserva({ mesas }: ListMesasReservaProp) {
         console.log(response)
         setReservas(response)
 
-       
     }
 
     async function handleFormSubmit(e: FormEvent) {
@@ -39,7 +38,7 @@ export function ListMesasReserva({ mesas }: ListMesasReservaProp) {
         const response = await FecthNovaReserva(mesaId, n_pessoas, data)
         setResponse(response)
         console.log(response)
-        if(!response.error){
+        if (!response.error) {
             router.push('/Reserva/novo')
         }
     }
@@ -55,20 +54,14 @@ export function ListMesasReserva({ mesas }: ListMesasReservaProp) {
                     <button type="button" onClick={handleFecthData}>Buscar</button>
                 </div>
 
-                {carregaReservas && <p>Carregando mesas...</p>}
-                {reservas && !carregaReservas &&
 
-                    mesas.map(mesa => {
-                        if (reservas?.find(reserva => reserva.id === mesa.id)) {
-                            return <button style={{ background: 'red' }} key={mesa.id}>{mesa.codigo}</button>
-
-                        }
+                {reservas?.map(mesa => {
 
 
-                        return (
-                            <button onClick={() => setSelectMesa(mesa)} key={mesa.id}>{mesa.codigo}</button>
-                        )
-                    })
+                    return (
+                        <button onClick={() => setSelectMesa(mesa)} key={mesa.id}>{mesa.codigo}</button>
+                    )
+                })
                 }
             </div>
 
@@ -80,7 +73,7 @@ export function ListMesasReserva({ mesas }: ListMesasReservaProp) {
                             <label>
                                 Data:
                                 <input type="date"
-                                    value={data}
+                                    defaultValue={data}
                                     readOnly
                                     max={selectMesa.id}
                                     name="data" />
@@ -89,13 +82,13 @@ export function ListMesasReserva({ mesas }: ListMesasReservaProp) {
                             <input type="number"
                                 hidden
                                 readOnly
-                                value={selectMesa.id}
+                                defaultValue={selectMesa.id}
                                 name="mesaId" />
 
                             <label>
                                 Mesa Selecionada:
                                 <input type="number"
-                                    value={selectMesa.codigo}
+                                    defaultValue={selectMesa.codigo}
                                     name="codigo" />
                             </label>
 
