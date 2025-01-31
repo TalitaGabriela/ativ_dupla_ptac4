@@ -5,6 +5,9 @@ import { useState } from "react"
 import { useRouter } from 'next/navigation';
 import { parseCookies } from "nookies";
 import { ApiURL } from "../config";
+import styles from "../styles/mesa.module.css"
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 
 export default function Mesa() {
@@ -37,6 +40,7 @@ export default function Mesa() {
                 setError(msg)
             }
             console.log("Mesa Cadastrada", mesa);
+            router.push("/Reserva")
         }
     }
 
@@ -57,42 +61,49 @@ export default function Mesa() {
 
     return (
         <div>
-            <div>
-                <h2>Cadastrar Mesa</h2>
-                <form onSubmit={onSubmit}>
-                    <a href="#" onClick={() => router.push('/')}></a>
+            <Navbar />
+            <div className={styles.body}>
 
-                    <div>
-                        <label htmlFor="codigo">Codigo Mesa</label>
-                        <input type="text"
-                            id="codigo"
-                            value={mesa.codigo}
-                            onChange={(e) => alterarCodigo(e.target.value)}
-                            required
-                            min={4} />
-                    </div>
+                <div className={styles.container}>
+                    <h2 className={styles.title}>Cadastrar Mesa</h2>
+                    <form onSubmit={onSubmit} className={styles.form}>
+                        <a href="#" onClick={() => router.push('/')}></a>
 
-                    <div>
-                        <label htmlFor="lugares">Número de Lugares</label>
-                        <input type="number"
-                            id="lugares"
-                            value={mesa.n_lugares}
-                            onChange={(e) => alterarLugares(e.target.value)}
-                            required
-                            min={1} />
-                    </div>
-
-                    {error && (
-                        <div>
-                            <p>{error}</p>
+                        <div className={styles.inputGroup}>
+                            <label htmlFor="codigo">Mesa:</label>
+                            <input type="text"
+                                id="codigo"
+                                className={styles.input}
+                                value={mesa.codigo}
+                                onChange={(e) => alterarCodigo(e.target.value)}
+                                required
+                                min={4} />
                         </div>
-                    )}
 
-                    <div>
-                        <button type="submit">Cadastrar</button>
-                    </div>
-                </form>
+                        <div className={styles.inputGroup}>
+                            <label htmlFor="lugares">Número de Lugares</label>
+                            <input type="number"
+                                id="lugares"
+                                className={styles.input}
+                                value={mesa.n_lugares}
+                                onChange={(e) => alterarLugares(e.target.value)}
+                                required
+                                min={1} />
+                        </div>
+
+                        {error && (
+                            <div className={styles.errorMessage}>
+                                <p>{error}</p>
+                            </div>
+                        )}
+
+                        <div>
+                            <button className={styles.button} type="submit">Cadastrar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
+            <Footer />
         </div>
     );
 

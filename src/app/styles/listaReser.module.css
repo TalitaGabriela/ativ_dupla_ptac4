@@ -1,0 +1,132 @@
+/* Estilização moderna e responsiva */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.reservasContainer {
+    text-align: center;
+}
+
+.title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.noReserva {
+    color: #666;
+    font-size: 18px;
+}
+
+.listaReservas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reservaCard {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.reservaCard:hover {
+    transform: scale(1.02);
+}
+
+.cancelled {
+    background: #f4f4f4;
+    color: #999;
+}
+
+.cancelado {
+    color: red;
+    font-weight: bold;
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.button {
+    background: #63bb36;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.button:hover {
+    background: #50a434;
+}
+
+.cancelButton {
+    background: red;
+}
+
+.cancelButton:hover {
+    background: darkred;
+}
+
+/* Modal estilizado */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalContent {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.error {
+    color: red;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    .buttonGroup {
+        flex-direction: column;
+    }
+
+    .button {
+        width: 100%;
+    }
+}

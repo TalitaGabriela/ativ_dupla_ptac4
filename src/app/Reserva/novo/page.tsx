@@ -5,6 +5,7 @@ import { ListMesasReserva } from "./ListMesasReserva"
 import { FetchMesas } from "../../functions/mesas"
 
 
+
 export default async function NovaReserva() {
     const user = await fecthUser()
     const mesa = await FetchMesas()
@@ -13,8 +14,9 @@ export default async function NovaReserva() {
     if (!user || !mesa) return
     return (
         <div>
-            <Menu usuario={user} />
+           
             <ListMesasReserva mesas={mesa} />
+            <Menu usuario={user} />
         </div>
     )
 }

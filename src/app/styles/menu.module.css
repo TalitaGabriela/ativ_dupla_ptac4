@@ -1,0 +1,81 @@
+/* Estilização moderna e responsiva para o menu */
+.body {
+    background-color: var(--background-color);
+    font-family: "Arial", sans-serif;
+}
+
+/* Container principal do menu */
+.container {
+    width: 100%;
+    max-width: 320px;
+    background: var(--white);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: auto;
+}
+
+/* Estilização da imagem do usuário */
+.userInfo img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid var(--primary-color);
+    margin-bottom: 10px;
+}
+
+/* Nome do usuário */
+.userInfo h2 {
+    font-size: 20px;
+    color: var(--text-color);
+    margin: 5px 0;
+}
+
+/* Tipo de usuário (admin ou cliente) */
+.userInfo p {
+    font-size: 14px;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* Menu de links */
+.menuLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Links estilizados */
+.menuLinks a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--primary-color);
+    color: var(--white);
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px;
+    border-radius: 8px;
+    transition: 0.3s ease;
+    text-decoration: none;
+}
+
+.menuLinks a:hover {
+    background:rgb(207, 167, 167);
+}
+
+/* Ícones */
+.menuLinks svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .container {
+        width: 90%;
+    }
+}

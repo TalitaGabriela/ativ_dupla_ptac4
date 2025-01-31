@@ -1,10 +1,10 @@
 
 import { redirect } from "next/navigation"
 import { Menu } from "../components/Menu"
-
 import { fecthUser } from "../functions/usuarios"
 import ListMinhasReservas from "./listMinhaReserva"
 import { FecthMinhasReserva } from "../functions/reserva"
+
 
 export default async function Reservas() {
 
@@ -16,8 +16,9 @@ export default async function Reservas() {
 
     return (
         <div>
-            <Menu usuario={user} />
             <ListMinhasReservas reservas={reservas} />
+            
+            <Menu usuario={user} />
         </div>
     )
 }

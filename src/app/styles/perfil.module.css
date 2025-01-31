@@ -1,0 +1,165 @@
+/* Reset básico para melhorar a consistência entre navegadores */
+.body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Container principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Título principal */
+.title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Linha divisória elegante */
+.divider {
+    width: 80%;
+    margin: 10px auto;
+    height: 2px;
+    background-color: #ddd;
+    border: none;
+}
+
+/* Layout responsivo flexível */
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+/* Estilização da lista de usuários */
+.usuariosContainer {
+    flex: 1;
+    min-width: 280px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.listaUsuarios {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.usuarioItem {
+    background: white;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilização das reservas */
+.reservasContainer {
+    flex: 1.5;
+    min-width: 280px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.listaReservas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reservaItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Botão de cancelar reserva */
+.btnCancelar {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btnCancelar:hover {
+    background: #b32d3a;
+}
+
+/* Perfil do usuário */
+.perfilContainer {
+    flex: 1;
+    min-width: 280px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.userName {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #343a40;
+}
+
+.input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Botões do perfil */
+.btnSalvar,
+.btnEditar {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btnSalvar:hover,
+.btnEditar:hover {
+    background: #0056b3;
+}
+
+/* Rodapé estilizado */
+.footer {
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+    background: #333;
+    color: white;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column;
+    }
+
+    .container {
+        padding: 10px;
+    }
+}

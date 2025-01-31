@@ -34,9 +34,6 @@ export default function Navbar() {
           <Link href="/Reserva" className={styles.link}>
             Reservar
           </Link>
-          <Link href={"/Mesa"} className={styles.link}>
-            Cadastrar Mesa
-          </Link>
           <Link href="/Cadastro" className={styles.link}>
             Cadastrar
           </Link>
